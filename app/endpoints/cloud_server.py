@@ -40,3 +40,19 @@ async def get_third_party_token(request: Request, form_data: OAuth2PasswordReque
 
 
 
+# 验证用户接口权限
+def verifying_user_interface(path, username):
+    Permission = UserInterfacePermission.objects.filter(username=username).first()
+    if path in Permission.interface_url:
+        return True
+    else:
+        return False
+
+
+@router.post('/xx_lists', description='获取xx列表')
+def get_vehicles(request: Request, oauth2: str = Depends(token_to_account)):
+    """
+    2.1获取xxx列表
+    """
+    # verify = verifying_user_interface(path=request.url.path, username=oauth2.username)
+
